@@ -1,0 +1,9 @@
+-- Consulta algumas colunas (campos) de uma tabela,após a identificação do que se deseja;
+-- Limitando as linhas para que o procesamento seja mais rápido;
+-- E filtrando a partir de uma data inicial na qual se deseje trabalhar.
+
+SELECT TOP 100
+    colunax, coluna y, colunaz
+FROM tabela1
+WHERE
+    coluna_data >= '20210101'
