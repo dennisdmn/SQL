@@ -1,0 +1,6 @@
+-- Consulta algumas colunas (campos) de uma tabela,
+-- após a identificação do que se deseja.
+-- Processamento rápido em BD pequenas.
+SELECT
+    colunax, coluna y, colunaz
+FROM tabela1
