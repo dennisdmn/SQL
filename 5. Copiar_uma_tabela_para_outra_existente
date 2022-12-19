@@ -1,0 +1,31 @@
+-- COPIA OS DADOS DE UMA TABELA PARA OUTRA.
+-- EXEMPLO 1:
+
+
+INSERT INTO table2
+SELECT * FROM table1;
+
+
+
+-- COPIA SOMENTE ALGUNS CAMPOS (COLUNAS).
+-- EXEMPLO 2:
+
+INSERT INTO table2
+(column_name1, column_name2, ...)
+SELECT column_name1, column_name2, ...
+FROM table1;
+
+-- OBS.:  Os nomes dos campos podem ser diferentes, MAS têm que ser do mesmo tipo. 
+--        Eles serão preenchidos de acordo com a ordem em que são declarados.
+
+
+-- COPIA OS DADOS DE UMA TABELA PARA OUTRA COM UM FILTRO DE CLAUSULA WHERE.
+-- EXEMPLO 3:
+
+INSERT INTO table2
+(column_name1, column_name2, ...)
+SELECT column_name1, column_name2, ...
+FROM table1
+WHERE column_name1 = "a qualquer coisa"
+
+
