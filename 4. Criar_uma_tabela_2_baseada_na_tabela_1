@@ -1,0 +1,25 @@
+-- CRIAR UMA TABELA NOVA E COPIAR DADOS DE OUTRA TABELA
+-- EXEMPLO 1:
+
+
+CREATE TABLE tabela_2 AS SELECT * FROM tabela_1
+
+
+-- OBS.:  chaves-primárias e chaves-estrangeiras não são replicadas na tabela_2, 
+--        caso existam na tabela_1. Nem mesmo o AUTO_INCREMENT é copiado.
+
+
+--*******************************************************************************
+---------------------------------------------------------------------------------
+--*******************************************************************************
+
+
+-- CRIAR UMA TABELA NOVA E COPIAR DADOS DE OUTRA TABELA, 
+-- INCLUSIVE CHAVES PRIMÁRIAS, ESTRANGEIRAS E TUDO MAIS.
+
+--EXEMPLO 2:
+
+CREATE TABLE tabela_2 LIKE tabela_1;
+INSERT INTO tabela_2 SELECT * FROM tabela_1;
+
+-- OBS.:  Com a utilização do LIKE a tabela é criada e copiada integralmente.
