@@ -1,9 +1,0 @@
--- CRIAR UMA TABELA NOVA E COPIAR DADOS DE OUTRA TABELA
--- EXEMPLO:
-
-
-CREATE TABLE tabela_2 AS SELECT * FROM tabela_1
-
-
--- OBS.:  chaves-primárias e chaves-estrangeiras não são replicadas na tabela_2, 
---        caso existam na tabela_1. Nem mesmo o AUTO_INCREMENT é copiado.
