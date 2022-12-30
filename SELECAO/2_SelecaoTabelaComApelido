@@ -1,0 +1,4 @@
+-- TabelaProduto => É um apelido atribuído numa  
+-- consulta a tabela original do banco de dados.
+
+SELECT * FROM DimProduct TabelaProduto
