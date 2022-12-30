@@ -1,0 +1,7 @@
+-- *** NOLOCK *** 
+-- Apesar de uma determinada tabela esteja reservada a uma operação,
+-- será viabilizada a consulta sem prejuízo da operação ou promovendo 
+-- uma espera da operação acabar para promover o resultado da consulta. 
+
+
+SELECT * FROM DimProduct (NOLOCK)
