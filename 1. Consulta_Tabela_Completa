@@ -1,5 +1,0 @@
--- Consulta uma tabela completa de um BD;
--- Processamento mais lento em caso de muitas linhas e colunas;
--- Indicado para BD pequenas.
-
-SELECT * FROM tabela1
