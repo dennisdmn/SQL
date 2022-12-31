@@ -1,7 +1,0 @@
--- Consulta algumas colunas (campos) de uma tabela,
--- após a identificação do que se deseja.
--- Processamento rápido em BD grandes.
-
-SELECT TOP 100
-    colunax, coluna y, colunaz
-FROM tabela1
