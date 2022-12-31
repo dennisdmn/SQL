@@ -1,0 +1,10 @@
+--Seleção de algumas colunas atribuindo apelidos ou renomeando 
+--com texto antes do sinal de IGUAL e atribuindo e/ou renomeando
+--a tabela consultada com a expressão: "TabProd".
+
+SELECT
+	  COD_PRODUTO  = TabProd.ProductKey
+	, COD_PRODUTO2 = TabProd.ProductAlternateKey
+	, DESC_PRODUTO = TabProd.EnglishProductName
+FROM
+	DimProduct TabProd (NOLOCK)
