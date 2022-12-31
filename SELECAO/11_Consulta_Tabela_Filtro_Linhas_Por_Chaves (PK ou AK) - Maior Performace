@@ -1,0 +1,26 @@
+-- O fato de adicionar ao o filtro um parâmetro-chave-primária 
+-- (indice ou ID) mesmo que em >= BRANCO aumenta performance.
+SELECT 	
+		*
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE
+			TabProd.EnglishProductName = 'BLADE'
+		AND	TabProd.ProductKey >= '' -- Aumenta performance.
+		
+-- ************************************************************************ --
+
+-- O fato de adicionar ao o filtro um parâmetro-chave-estrangeira 
+-- mesmo que em >= BRANCO aumenta performance.
+SELECT 	
+		*
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE
+			TabProd.EnglishProductName = 'BLADE'
+		AND	TabProd.ProductAlternateKey >= ''	-- Aumenta performance.
+		AND TabProd.StartDate >= ''				-- Aumenta performance.
