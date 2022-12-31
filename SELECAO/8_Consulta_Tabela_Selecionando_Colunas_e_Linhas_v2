@@ -1,0 +1,29 @@
+-- Seleção de duas linhas ou dois registro
+-- utilizando o operador OR
+-- SOMENTE para DUAS LINHAS está OK
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+			TabProd.ProductKey = '101'
+		OR	TabProd.ProductKey = '107'
+		
+--***************************************************--
+
+-- Seleção de linhas ou registros por meio de uma lista 
+-- ou conjunto de valores.
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.ProductKey IN ( '101', '107', '125' )
