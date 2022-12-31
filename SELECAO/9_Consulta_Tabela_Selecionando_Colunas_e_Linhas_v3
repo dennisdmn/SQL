@@ -1,0 +1,14 @@
+-- Seleção de linhas ou registros por meio de uma lista 
+-- ou conjunto de valores usando o operador de negação NOT.
+
+-- *** USÁ-LO somente na frente de listas *** --
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.ProductKey NOT IN ( '1', '2', '3' ) 
