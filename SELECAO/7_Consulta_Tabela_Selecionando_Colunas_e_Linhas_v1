@@ -1,0 +1,74 @@
+-- Selecao de uma única linha ou registro.
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.ProductKey = '100'
+		
+--*********************************************************--
+
+-- Selecao de um intervalo linhas ou registros.
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.ProductKey >= '100'
+
+--**********************************************************--
+
+-- Selecao de um intervalo especifico linhas ou registros.
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+			TabProd.ProductKey >= '100'
+		AND TabProd.ProductKey <= '115'
+		
+--**********************************************************--
+
+-- Selecao de um intervalo especifico linhas ou registros 
+-- mais um filtro especifico.
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+			TabProd.ProductKey >= '100'
+		AND TabProd.ProductKey <= '115'
+		AND	TabProd.ProductKey <> '110'
+		
+--**********************************************************--
+		
+-- Selecao de um intervalo especifico linhas ou registros 
+-- mais um filtro especifico de NEGACAO = "!=".
+SELECT 
+		TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+			TabProd.ProductKey >= '100'
+		AND TabProd.ProductKey <= '115'
+		AND	TabProd.ProductKey != '110'
