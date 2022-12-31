@@ -1,0 +1,14 @@
+--Formas e usos dos comentários.
+SELECT
+	/*
+	Comentário multi-linhas.
+	*/
+
+	  TabProd.ProductKey
+	--, TabProd.ProductAlternateKey AS COD ===> (Maneira de comentar e alterar o script)
+	, TabProd.EnglishProductName AS NOME
+
+	--Comentário de única linha.
+
+FROM
+	DimProduct TabProd (NOLOCK)
