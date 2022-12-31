@@ -1,0 +1,58 @@
+-- Seleção com filtro de linha ou registro usando o 
+-- operador: LIKE equivalente ao CONTÉM
+SELECT 
+		  TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.EnglishProductName LIKE ('%WASHER%')
+		
+--***************************************************************--
+
+-- Seleção com filtro de linha ou registro usando o 
+-- operador: NOT LIKE equivalente ao NÃO CONTÉM
+SELECT 
+		  TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.EnglishProductName NOT LIKE ('%WASHER%')	
+
+
+--***************************************************************--
+
+-- Seleção com filtro de linha ou registro usando o 
+-- operador: LIKE + ('xxxx%') equivalente ao COMEÇA COM
+SELECT 
+		  TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.EnglishProductName LIKE ('LOCK%')
+		
+--***************************************************************--
+
+-- Seleção com filtro de linha ou registro usando o 
+-- operador: LIKE + ('%xxxx') equivalente ao TERMINA COM
+SELECT 
+		  TabProd.ProductKey
+		, TabProd.ProductAlternateKey
+		, TabProd.EnglishProductName
+
+FROM
+		DimProduct TabProd (nolock)
+
+WHERE 
+		TabProd.EnglishProductName LIKE ('%LOCK')
