@@ -1,0 +1,32 @@
+-- Script com o objetivo de acrescentar a tabela uma coluna de saldo
+-- acumulado por meio da sintaxe: SUM + OVER + PARTITION BY + ORDER BY.
+
+-- Obs.: Uma nova coluna por meio de uma Views. 
+
+-- Exemplo - Smart Fit:
+
+SELECT 
+		  ORIGEM
+		, COD_EMPRESA
+		, NOME_EMPRESA
+		, ID_LANCTO
+		, DESCR_LANCTO
+		, DATA_PAGTO
+		, NOME_BANCO
+		, NUM_CC
+		, COD_CONTA_CONTABIL
+		, CONCILIADO
+		, TPO_EVENTO
+		, VLR_ENTRADA
+		, VLR_SAIDA
+		, VLR_MOV
+		,ROUND(
+			SUM(VLR_MOV) 
+			OVER (
+				PARTITION BY COD_CONTA_CONTABIL 
+				ORDER BY 
+					DATA_PAGTO, 
+					ID_LANCTO)
+			,2) AS VLR_ACUM
+FROM 
+		fFin_BR01_SMARTFIT_BRADESCO_COD_CONTABIL_1101021005;
