@@ -1,0 +1,4 @@
+-- Seleciona em lista as tabelas de um determinado banco de dados.
+-- Sintaxe: SQLite
+
+SELECT * FROM sqlite_master WHERE type='table';
