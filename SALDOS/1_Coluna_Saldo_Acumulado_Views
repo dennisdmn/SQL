@@ -1,0 +1,29 @@
+-- Cria uma tabela exemplo para aplicar o saldo acumulado numa Views.
+CREATE TABLE base (
+	Id int,
+	Nome varchar(50),
+	Sobrenome varchar(50),
+	Estado varchar(2),
+	Gastos decimal,
+	Data_Compra date
+);
+
+-- Inseri dados de exemplo para simular uma coluna de saldo acumulado por Estado (UF).
+INSERT INTO base
+VALUES
+	(152, 		'Andre', 	  'Silva', 	  'MG', 351.50, 	'2018-01-22'),
+	(222, 		'Andre', 	  'Toledo', 	'SP', 250.10, 	'2018-05-15'),
+	(451, 		'Carlos', 	'Pinheiro', 'MG', 455.00, 	'2017-02-05'),
+	(897, 		'Juliana', 	'Oliveira', 'MG', 150.50, 	'2017-03-01'),
+	(852, 		'Maria', 	  'Lima', 	  'MG', 325.90,	  '2017-04-01'),
+	(222,		  'Andre', 	  'Pereira', 	'MG', 332.59, 	'2018-05-25'),
+	(105535, 	'Vanessa', 	'Costa', 	  'SP', 241.57, 	'2017-04-30');
+
+-- Seleciona a base criada para o exemplo de coluna de saldo acumulado por Estado (UF).
+SELECT * FROM base;
+
+-- Seleciona a base criada para o exemplo de coluna de saldo acumulado por Estado (UF) e
+-- efetua a criação numa Views de uma acumulação de saldo ordenado por Id e Estado.
+SELECT *,  
+	SUM(Gastos) OVER (PARTITION BY Estado order by Id, Estado) AS cum_amt
+       FROM base;
