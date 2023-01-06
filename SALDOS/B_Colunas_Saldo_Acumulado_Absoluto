@@ -1,0 +1,38 @@
+-- Exemplo de views / script de como selecionar uma tabela e
+-- adicionar uma coluna de saldo acumulado: VLR_ACUM com
+-- arredondamento de duas casas decimais com operador: ROUND e 
+-- de uma outra coluna com valores absolutos com: ABS().
+
+-- Sintaxe: T-SQL
+
+-- Coluna de Soma Acumulada - Sintaxe: SUM() + OVER + (PARTITION BY [Column1] ORDER BY [Column2], [Column3])
+-- Coluna de Valores Absolutos - Sintaxe: ABS([Column1])
+
+SELECT 
+		  ORIGEM
+		, COD_EMPRESA
+		, NOME_EMPRESA
+		, ID_LANCTO
+		, DESCR_LANCTO
+		, DATA_PAGTO
+		, NOME_BANCO
+		, NUM_CC
+		, COD_CONTA_CONTABIL
+		, CONCILIADO
+		, TPO_EVENTO
+		, VLR_ENTRADA
+		, VLR_SAIDA
+		, VLR_MOV
+		, ABS(VLR_MOV) AS VLR_ABS -- Coluna de valores absolutos.
+		,ROUND(
+			SUM(VLR_MOV) 
+			OVER (
+				PARTITION BY COD_CONTA_CONTABIL 
+				ORDER BY 
+					DATA_PAGTO, 
+					ID_LANCTO)
+			,2) AS VLR_ACUM -- Coluna de Saldo Acumulado por Soma.
+
+FROM
+ 
+		fGesplan_BR07_1101021002_Itau_Sdo_Acum;
