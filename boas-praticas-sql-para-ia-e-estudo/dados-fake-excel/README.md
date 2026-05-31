@@ -1,6 +1,6 @@
 # Dados fake em Excel para praticar SQL
 
-Esta pasta contem bases pequenas e ficticias para praticar as tecnicas da pasta `boas-praticas-sql-para-ia-e-estudo`.
+Esta subpasta contem bases pequenas e ficticias para praticar as tecnicas da pasta `boas-praticas-sql-para-ia-e-estudo`.
 
 O arquivo principal e:
 
@@ -36,4 +36,3 @@ bases_fake_repasses_sql.xlsx
 Os dados sao ficticios e foram criados apenas para estudo. Nao representam dados reais de clientes, alunos, empresas ou sistemas corporativos.
 
 O workbook foi pensado para ser pequeno o suficiente para leitura humana e completo o suficiente para uma IA de codificacao usar como exemplo de boas praticas.
-

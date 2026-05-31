@@ -42,6 +42,7 @@ Os exemplos usam SQL tradicional sempre que possivel. Algumas tecnicas precisam 
 | `04_joins_por_regras_priorizadas.sql` | Joins por regras | Aplicar regras sequenciais de match, preservando a base principal |
 | `05_processamento_por_lotes.sql` | Processamento por lotes | Dividir documentos em lotes para consultar bases grandes com menor risco |
 | `06_checkpoint_e_retomada.sql` | Checkpoint e retomada | Salvar progresso de lotes e permitir retomada apos queda de sessao |
+| `dados-fake-excel/` | Bases ficticias em Excel | Praticar as tecnicas com dados pequenos e auditaveis |
 | `PROMPT_AUTOMACAO.md` | Prompt para IA | Orientar uma automacao a seguir estes padroes em tarefas futuras |
 
 ## Como estudar
@@ -55,7 +56,28 @@ Uma boa ordem de estudo e:
 5. Estude `04_joins_por_regras_priorizadas.sql` para entender match por prioridade.
 6. Use `05_processamento_por_lotes.sql` quando o volume for grande.
 7. Use `06_checkpoint_e_retomada.sql` para processos longos.
-8. Use `PROMPT_AUTOMACAO.md` para orientar uma IA de codificacao.
+8. Abra `dados-fake-excel/bases_fake_repasses_sql.xlsx` para praticar com bases pequenas.
+9. Use `PROMPT_AUTOMACAO.md` para orientar uma IA de codificacao.
+
+## Bases fake para pratica
+
+A subpasta `dados-fake-excel/` contem um workbook pequeno e ficticio:
+
+```text
+dados-fake-excel/bases_fake_repasses_sql.xlsx
+```
+
+Ele inclui abas para treinar:
+
+1. Extracao principal.
+2. Extracao complementar que substitui chaves.
+3. Base candidata.
+4. Base de referencia.
+5. Base SAP fake.
+6. Controle de lotes.
+7. Resultados esperados.
+
+Use esse workbook para importar os dados em SQLite, PostgreSQL, SQL Server, Oracle ou outra ferramenta de estudo e reproduzir os exemplos desta pasta.
 
 ## Fluxo recomendado de trabalho
 
@@ -384,4 +406,3 @@ Ao seguir estes exemplos, uma rotina SQL deve produzir:
 4. Reprocessamento controlado.
 5. Melhor entendimento para humanos.
 6. Melhores instrucoes para IAs de codificacao.
-
