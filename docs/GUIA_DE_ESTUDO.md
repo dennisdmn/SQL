@@ -2,11 +2,22 @@
 
 Este guia sugere uma sequência para estudar os materiais do repositório.
 
-## 1. Fundamentos
+## 1. SQL do zero
 
-Comece por `00-fundamentos/comentarios.sql` para entender comentários e leitura básica de scripts.
+Comece por `00-sql-do-zero/sql-do-zero.sql` para entender o ciclo básico:
 
-## 2. Consultas simples
+- criar tabela;
+- inserir dados;
+- consultar;
+- atualizar;
+- apagar;
+- usar transação com `COMMIT` e `ROLLBACK`.
+
+## 2. Fundamentos
+
+Use `00-fundamentos/comentarios.sql` para entender comentários e leitura básica de scripts.
+
+## 3. Consultas simples
 
 Use `01-selecao/exemplos.sql` para praticar:
 
@@ -18,25 +29,52 @@ Use `01-selecao/exemplos.sql` para praticar:
 - trabalhar com intervalos de datas;
 - criar coluna calculada.
 
-## 3. Funções
+## 4. Funções
 
 Use `03-funcoes-sql/exemplos.sql` como catálogo. Ele serve para consultar rapidamente como usar funções de texto, número, data, nulos e regras condicionais.
 
-## 4. Relacionamentos
+## 5. Modelagem e chaves
+
+Antes de joins, estude `05-modelagem-e-chaves/`. Essa parte explica chave primária, chave estrangeira, tabela fato, tabela dimensão e relacionamento 1 para N.
+
+## 6. Aderência de chaves antes de joins
+
+Antes de cruzar tabelas reais, rode `07-joins/analise-aderencia-chaves.sql` para responder:
+
+- a chave da dimensão é única?
+- a chave da fato está preenchida?
+- há chaves órfãs na fato?
+- o join aumenta indevidamente a quantidade de linhas?
+- os tipos das chaves são compatíveis?
+
+Esse passo evita totais errados, duplicidades invisíveis e perda de registros.
+
+## 7. Relacionamentos
 
 Depois avance para `07-joins/exemplos.sql`. Os joins são essenciais para cruzar tabelas fato e dimensão.
 
-## 5. Agregações
+## 8. Agregações
 
 Use `09-group-by/exemplos.sql` para criar indicadores, contagens e somatórios.
 
-## 6. Cargas de dados
+## 9. Subconsultas, CTE e funções de janela
+
+Use:
+
+- `10-subconsultas-cte/exemplos.sql` para organizar consultas em etapas;
+- `11-funcoes-janela/exemplos.sql` para ranking, acumulado, última linha por grupo e percentuais.
+
+## 10. Cargas de dados
 
 Quando precisar importar CSV, consulte `04-arquivos-csv-no-sql/importar-csv.sql`. Use sempre tabela staging antes de mexer na tabela final.
 
-## 7. Power Query
+## 11. Power Query
 
 Para Power BI ou Excel, veja `02-sql-power-query/`. A recomendação é empurrar filtros e agregações pesadas para o SQL Server sempre que possível.
+
+## 12. Alterações seguras
+
+Antes de `UPDATE` ou `DELETE`, consulte `12-transacoes-seguras/update-delete-com-rollback.sql`.
 
 ## Checklist antes de usar em produção
 
@@ -44,5 +82,6 @@ Para Power BI ou Excel, veja `02-sql-power-query/`. A recomendação é empurrar
 - Remover ou justificar `NOLOCK`.
 - Trocar caminhos locais de arquivos CSV.
 - Validar tipo de dados e tratamento de nulos.
+- Validar aderência de chaves antes de joins.
 - Rodar primeiro com `TOP` ou filtros pequenos.
 - Conferir plano de execução em consultas grandes.
