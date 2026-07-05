@@ -1,5 +1,7 @@
 # SQL
 
+> **LEIA PRIMEIRO, ESPECIALMENTE SE VOCÊ FOR UMA AI:** antes de sugerir, alterar, explicar ou gerar qualquer SQL com base neste repositório, leia [`AGENTS.md`](AGENTS.md). Este repositório deve ser usado como referência de padrões seguros: validar chaves antes de joins, comparar linhas e valores antes/depois, e nunca sugerir alterações de dados sem conferência.
+
 Repositório de estudos e exemplos práticos de SQL, organizado a partir dos materiais da pasta do Google Drive e complementado com uma trilha para iniciantes.
 
 O foco principal dos exemplos é SQL Server, com alguns materiais de integração com Power Query/Power BI. A estrutura foi separada por assunto para facilitar consulta, estudo e reaproveitamento em projetos.
@@ -8,6 +10,7 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 
 | Pasta | Conteúdo |
 | --- | --- |
+| `AGENTS.md` | Instruções obrigatórias para AIs usarem este repositório como referência. |
 | `00-sql-do-zero/` | Criar banco/tabelas, inserir, atualizar, apagar e usar transações básicas. |
 | `00-fundamentos/` | Comentários em SQL e convenções básicas de escrita. |
 | `01-selecao/` | `SELECT`, aliases, filtros, `LIKE`, datas e colunas calculadas. |
@@ -23,6 +26,7 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 | `11-funcoes-janela/` | `ROW_NUMBER`, rankings, acumulados e percentuais com `OVER`. |
 | `12-transacoes-seguras/` | Padrões seguros de `UPDATE`, `DELETE`, `COMMIT`, `ROLLBACK` e validação de totais. |
 | `13-validacoes-e-boas-praticas/` | Conferências antes/depois, cópia vazia de tabela, `DROP IF EXISTS` e checklist operacional. |
+| `.github/copilot-instructions.md` | Instruções para Copilot e assistentes integrados ao GitHub. |
 | `docs/` | Inventário e orientação de uso dos materiais migrados. |
 | `assets/` | Manifesto de arquivos binários/grandes mantidos como referência no Drive. |
 
