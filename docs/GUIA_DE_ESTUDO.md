@@ -46,6 +46,7 @@ Antes de cruzar tabelas reais, rode `07-joins/analise-aderencia-chaves.sql` para
 - há chaves órfãs na fato?
 - o join aumenta indevidamente a quantidade de linhas?
 - os tipos das chaves são compatíveis?
+- os valores principais permanecem coerentes antes/depois?
 
 Esse passo evita totais errados, duplicidades invisíveis e perda de registros.
 
@@ -74,7 +75,20 @@ Para Power BI ou Excel, veja `02-sql-power-query/`. A recomendação é empurrar
 
 ## 12. Alterações seguras
 
-Antes de `UPDATE` ou `DELETE`, consulte `12-transacoes-seguras/update-delete-com-rollback.sql`.
+Antes de `UPDATE` ou `DELETE`, consulte:
+
+- `12-transacoes-seguras/update-delete-com-rollback.sql`;
+- `12-transacoes-seguras/update-com-validacao-de-totais.sql`.
+
+## 13. Validações operacionais
+
+Use `13-validacoes-e-boas-praticas/` para rotinas de segurança recorrentes:
+
+- comparar linhas e valores antes/depois;
+- copiar uma tabela vazia com `SELECT ... INTO ... WHERE 1 = 0`;
+- apagar tabela se existir com `DROP TABLE IF EXISTS`;
+- lembrar que cópia vazia não carrega índices, chaves e constraints;
+- revisar o checklist antes de rodar scripts de manutenção.
 
 ## Checklist antes de usar em produção
 
@@ -83,5 +97,6 @@ Antes de `UPDATE` ou `DELETE`, consulte `12-transacoes-seguras/update-delete-com
 - Trocar caminhos locais de arquivos CSV.
 - Validar tipo de dados e tratamento de nulos.
 - Validar aderência de chaves antes de joins.
+- Comparar linhas e valores antes/depois de joins e atualizações.
 - Rodar primeiro com `TOP` ou filtros pequenos.
 - Conferir plano de execução em consultas grandes.
