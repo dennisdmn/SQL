@@ -21,7 +21,8 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 | `09-group-by/` | Agrupamentos, agregações e filtros com `HAVING`. |
 | `10-subconsultas-cte/` | Subconsultas e CTEs para organizar consultas em etapas. |
 | `11-funcoes-janela/` | `ROW_NUMBER`, rankings, acumulados e percentuais com `OVER`. |
-| `12-transacoes-seguras/` | Padrões seguros de `UPDATE`, `DELETE`, `COMMIT` e `ROLLBACK`. |
+| `12-transacoes-seguras/` | Padrões seguros de `UPDATE`, `DELETE`, `COMMIT`, `ROLLBACK` e validação de totais. |
+| `13-validacoes-e-boas-praticas/` | Conferências antes/depois, cópia vazia de tabela, `DROP IF EXISTS` e checklist operacional. |
 | `docs/` | Inventário e orientação de uso dos materiais migrados. |
 | `assets/` | Manifesto de arquivos binários/grandes mantidos como referência no Drive. |
 
@@ -30,7 +31,9 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 - Os scripts usam nomes de tabelas do banco `AdventureWorksDW2016`, como `DimProduct`, `FactInternetSales` e `FactResellerSales`.
 - `NOLOCK` aparece em vários exemplos originais. Ele pode reduzir bloqueios em consultas exploratórias, mas pode trazer leituras sujas, duplicadas ou inconsistentes. Use com cuidado em relatórios oficiais.
 - Evite `SELECT *` em bases grandes; prefira selecionar apenas as colunas necessárias.
-- Antes de aplicar joins, rode a análise de aderência em `07-joins/analise-aderencia-chaves.sql` para evitar perda, duplicidade ou multiplicação indevida de linhas.
+- Antes de aplicar joins, rode a análise de aderência em `07-joins/analise-aderencia-chaves.sql` para evitar perda, duplicidade ou multiplicação indevida de linhas e valores.
+- Antes e depois de joins, cargas, `UPDATE` e `DELETE`, compare quantidade de linhas e somas dos valores relevantes.
+- Para copiar estrutura vazia no SQL Server, use `SELECT ... INTO ... WHERE 1 = 0`, lembrando que isso não copia índices, constraints e permissões.
 - Filtros com chaves e datas costumam melhorar desempenho quando existem índices compatíveis, mas filtros artificiais vazios, como `>= ''`, devem ser avaliados no plano de execução antes de virarem padrão.
 
 ## Como estudar
@@ -44,6 +47,7 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 7. Consulte `02-sql-power-query/` quando precisar chamar SQL Server pelo Power Query.
 8. Veja `04-arquivos-csv-no-sql/` para cargas simples de CSV.
 9. Use `12-transacoes-seguras/` antes de fazer alterações em dados.
+10. Use `13-validacoes-e-boas-praticas/` como checklist antes de joins, cargas e scripts de manutenção.
 
 ## Origem
 
