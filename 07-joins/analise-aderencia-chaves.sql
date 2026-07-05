@@ -8,6 +8,7 @@
     - Fato:      FactInternetSales      alias Fato
     - Dimensao:  DimProduct             alias Dim
     - Chave:     ProductKey
+    - Valores:   SalesAmount, TaxAmt, Freight
 
     Troque os nomes das tabelas e colunas para o seu caso.
 */
@@ -31,12 +32,13 @@ WHERE (TABLE_NAME = 'FactInternetSales' AND COLUMN_NAME = 'ProductKey')
 ORDER BY TABLE_NAME;
 
 /*
-    2. Conferir volume e nulos na chave da fato.
+    2. Conferir volume, chaves distintas e nulos na chave da fato.
     Chave nula na fato normalmente nao casa com dimensao.
 */
 SELECT
     COUNT(*) AS LinhasFato,
     COUNT(ProductKey) AS ChavesPreenchidas,
+    COUNT(DISTINCT ProductKey) AS ChavesDistintas,
     SUM(CASE WHEN ProductKey IS NULL THEN 1 ELSE 0 END) AS ChavesNulas
 FROM FactInternetSales;
 
@@ -74,13 +76,14 @@ LEFT JOIN DimProduct AS Dim
 */
 SELECT TOP (100)
     Fato.ProductKey,
-    COUNT(*) AS QtdeLinhasFato
+    COUNT(*) AS QtdeLinhasFato,
+    SUM(Fato.SalesAmount) AS ValorVendasSemProduto
 FROM FactInternetSales AS Fato
 LEFT JOIN DimProduct AS Dim
     ON Dim.ProductKey = Fato.ProductKey
 WHERE Dim.ProductKey IS NULL
 GROUP BY Fato.ProductKey
-ORDER BY QtdeLinhasFato DESC;
+ORDER BY ValorVendasSemProduto DESC;
 
 /*
     6. Verificar chaves da dimensao que nao aparecem na fato.
@@ -108,12 +111,63 @@ LEFT JOIN DimProduct AS Dim
     ON Dim.ProductKey = Fato.ProductKey;
 
 /*
-    8. Teste de multiplicacao por duplicidade na dimensao.
+    8. Comparar linhas e valores antes/depois do join.
+    Este e o teste mais importante para relatorios financeiros ou indicadores.
+*/
+WITH Antes AS
+(
+    SELECT
+        COUNT(*) AS QtdeLinhas,
+        COUNT(DISTINCT SalesOrderNumber) AS QtdePedidos,
+        COUNT(DISTINCT ProductKey) AS QtdeProdutos,
+        SUM(SalesAmount) AS ValorVendas,
+        SUM(TaxAmt) AS ValorImposto,
+        SUM(Freight) AS ValorFrete
+    FROM FactInternetSales
+),
+Depois AS
+(
+    SELECT
+        COUNT(*) AS QtdeLinhas,
+        COUNT(DISTINCT Fato.SalesOrderNumber) AS QtdePedidos,
+        COUNT(DISTINCT Fato.ProductKey) AS QtdeProdutos,
+        SUM(Fato.SalesAmount) AS ValorVendas,
+        SUM(Fato.TaxAmt) AS ValorImposto,
+        SUM(Fato.Freight) AS ValorFrete
+    FROM FactInternetSales AS Fato
+    LEFT JOIN DimProduct AS Dim
+        ON Dim.ProductKey = Fato.ProductKey
+)
+SELECT
+    Antes.QtdeLinhas AS LinhasAntes,
+    Depois.QtdeLinhas AS LinhasDepois,
+    Depois.QtdeLinhas - Antes.QtdeLinhas AS DifLinhas,
+    Antes.QtdePedidos AS PedidosAntes,
+    Depois.QtdePedidos AS PedidosDepois,
+    Depois.QtdePedidos - Antes.QtdePedidos AS DifPedidos,
+    Antes.QtdeProdutos AS ProdutosAntes,
+    Depois.QtdeProdutos AS ProdutosDepois,
+    Depois.QtdeProdutos - Antes.QtdeProdutos AS DifProdutos,
+    Antes.ValorVendas AS VendasAntes,
+    Depois.ValorVendas AS VendasDepois,
+    Depois.ValorVendas - Antes.ValorVendas AS DifVendas,
+    Antes.ValorImposto AS ImpostoAntes,
+    Depois.ValorImposto AS ImpostoDepois,
+    Depois.ValorImposto - Antes.ValorImposto AS DifImposto,
+    Antes.ValorFrete AS FreteAntes,
+    Depois.ValorFrete AS FreteDepois,
+    Depois.ValorFrete - Antes.ValorFrete AS DifFrete
+FROM Antes
+CROSS JOIN Depois;
+
+/*
+    9. Teste de multiplicacao por duplicidade na dimensao.
     Se aparecer resultado, cada linha da fato pode estar encontrando mais de uma linha na dimensao.
 */
 SELECT TOP (100)
     Fato.ProductKey,
-    COUNT(*) AS LinhasDepoisDoJoin
+    COUNT(*) AS LinhasDepoisDoJoin,
+    SUM(Fato.SalesAmount) AS ValorVendasDepoisDoJoin
 FROM FactInternetSales AS Fato
 LEFT JOIN DimProduct AS Dim
     ON Dim.ProductKey = Fato.ProductKey
@@ -125,7 +179,7 @@ HAVING COUNT(*) > 1
 ORDER BY LinhasDepoisDoJoin DESC;
 
 /*
-    9. Para chaves textuais: normalizar antes de comparar.
+    10. Para chaves textuais: normalizar antes de comparar.
     Use quando houver espacos, diferenca de caixa ou zeros a esquerda.
 */
 /*
@@ -138,10 +192,10 @@ LEFT JOIN MinhaDimensao AS Dim
 */
 
 /*
-    10. Decisao do tipo de join.
+    11. Decisao do tipo de join.
 
     - Use INNER JOIN se so interessam registros com correspondencia dos dois lados.
     - Use LEFT JOIN se a tabela da esquerda precisa ser preservada integralmente.
     - Use FULL OUTER JOIN para auditoria de divergencias entre dois conjuntos.
-    - Evite aceitar aumento de linhas sem explicar a cardinalidade.
+    - Evite aceitar aumento de linhas ou valores sem explicar a cardinalidade.
 */
