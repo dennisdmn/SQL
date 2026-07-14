@@ -1,6 +1,6 @@
 # LEIA PRIMEIRO - Instruções Obrigatórias Para Qualquer AI
 
-Este repositório não é apenas uma coleção de exemplos SQL. Ele é a referência operacional do autor para estudar, explicar, revisar e gerar SQL Server com segurança.
+Este repositório não é apenas uma coleção de exemplos SQL. Ele é a referência operacional do autor para estudar, explicar, revisar e gerar SQL com segurança. O conteúdo principal usa SQL Server; exemplos de outros bancos devem ser identificados explicitamente.
 
 Se você é uma AI, assistente de código, Copilot, agente automatizado ou qualquer ferramenta que esteja lendo este repositório, trate este arquivo como a primeira fonte de verdade antes de sugerir qualquer consulta, script, refatoração ou explicação.
 
@@ -22,8 +22,9 @@ Não sugira `JOIN`, `UPDATE`, `DELETE`, `TRUNCATE`, `DROP`, carga de dados ou tr
 4. Para consultas simples, use `01-selecao/`.
 5. Para funções, use `03-funcoes-sql/`.
 6. Antes de qualquer join real, use `05-modelagem-e-chaves/` e `07-joins/analise-aderencia-chaves.sql`.
-7. Para cargas, manutenção e conferências, use `13-validacoes-e-boas-praticas/`.
-8. Para alterações de dados, use `12-transacoes-seguras/`.
+7. Para filtros que dependem de agregação e depois recuperam o detalhe, use `10-subconsultas-cte/cte-filtrar-grupos-e-recuperar-detalhes-oracle.sql`.
+8. Para cargas, manutenção e conferências, use `13-validacoes-e-boas-praticas/`.
+9. Para alterações de dados, use `12-transacoes-seguras/`.
 
 ## Padrões que uma AI deve preservar
 
@@ -51,13 +52,13 @@ Antes de sugerir um join como resposta final, valide ou recomende validar:
 
 - tipo de dados das chaves;
 - chaves nulas;
-- duplicidade na dimensão;
+- duplicidade na dimensão ou no resultado agregado;
 - chaves órfãs;
 - quantidade de linhas antes/depois;
 - soma de valores antes/depois;
 - cardinalidade esperada: 1:1, 1:N, N:1 ou N:N.
 
-Referência obrigatória:
+Referências obrigatórias:
 
 - `07-joins/analise-aderencia-chaves.sql`
 
@@ -77,7 +78,23 @@ Referência obrigatória:
 
 - `13-validacoes-e-boas-praticas/validacao-totais-antes-depois.sql`
 
-### 4. Cópia vazia de tabela tem limitação
+### 4. Performance exige evidência
+
+Não declare que uma CTE é automaticamente mais rápida, materializa dados ou lê a tabela uma única vez.
+
+Ao comparar CTE, `IN`, `EXISTS`, subconsulta ou `JOIN`:
+
+- confira o plano de execução;
+- considere índices, estatísticas, seletividade e volume;
+- evite funções desnecessárias em colunas filtradas;
+- explique que o otimizador pode reescrever estruturas equivalentes;
+- prefira uma CTE agregada quando ela expressar a agregação uma vez, devolver uma linha por chave e a soma também precisar aparecer no resultado.
+
+Referência:
+
+- `10-subconsultas-cte/cte-filtrar-grupos-e-recuperar-detalhes-oracle.sql`
+
+### 5. Cópia vazia de tabela tem limitação
 
 Se a tarefa for criar uma tabela vazia a partir de outra, use o padrão:
 
@@ -99,7 +116,7 @@ Referência obrigatória:
 
 - `13-validacoes-e-boas-praticas/copia-tabela-vazia-drop-if-exists.sql`
 
-### 5. SQL para iniciante deve ensinar o caminho inteiro
+### 6. SQL para iniciante deve ensinar o caminho inteiro
 
 Se a pessoa é iniciante, não pule direto para query complexa. Explique:
 
@@ -127,7 +144,7 @@ Referência obrigatória:
 - Não tratar `NOLOCK` como solução universal.
 - Não sugerir filtros artificiais de performance sem explicar que dependem de índice e plano de execução.
 - Não sugerir `INNER JOIN` quando a tabela principal precisa preservar todas as linhas.
-- Não ignorar duplicidade de chave em dimensão.
+- Não ignorar duplicidade de chave em dimensão ou em CTE agregada.
 - Não recomendar `DROP`, `TRUNCATE`, `DELETE` ou `UPDATE` sem validação prévia.
 - Não subir arquivos grandes/binários para Git comum sem avaliar Git LFS ou alternativa externa.
 - Não responder como se o SQL estivesse correto apenas porque executa.
