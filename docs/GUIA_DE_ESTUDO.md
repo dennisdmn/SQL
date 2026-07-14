@@ -56,14 +56,17 @@ Depois avance para `07-joins/exemplos.sql`. Os joins são essenciais para cruzar
 
 ## 8. Agregações
 
-Use `09-group-by/exemplos.sql` para criar indicadores, contagens e somatórios.
+Use `09-group-by/exemplos.sql` para criar indicadores, contagens e somatórios. Em seguida, veja `10-subconsultas-cte/cte-filtrar-grupos-e-recuperar-detalhes-oracle.sql` para filtrar grupos com `HAVING` e retornar as linhas detalhadas das chaves aprovadas.
 
 ## 9. Subconsultas, CTE e funções de janela
 
 Use:
 
 - `10-subconsultas-cte/exemplos.sql` para organizar consultas em etapas;
+- `10-subconsultas-cte/cte-filtrar-grupos-e-recuperar-detalhes-oracle.sql` para o padrão agregado + detalhe no Oracle;
 - `11-funcoes-janela/exemplos.sql` para ranking, acumulado, última linha por grupo e percentuais.
+
+No exemplo Oracle, a CTE calcula uma vez a soma por `VKONT` e o `JOIN` recupera o detalhe. Isso pode permitir um plano mais eficiente do que subconsultas correlacionadas, mas deve ser confirmado pelo plano de execução; CTE não garante materialização.
 
 ## 10. Cargas de dados
 
@@ -98,5 +101,6 @@ Use `13-validacoes-e-boas-praticas/` para rotinas de segurança recorrentes:
 - Validar tipo de dados e tratamento de nulos.
 - Validar aderência de chaves antes de joins.
 - Comparar linhas e valores antes/depois de joins e atualizações.
-- Rodar primeiro com `TOP` ou filtros pequenos.
+- Rodar primeiro com `TOP`, `FETCH FIRST` ou filtros pequenos, conforme o banco.
 - Conferir plano de execução em consultas grandes.
+- Verificar se funções aplicadas a colunas de filtro impedem o uso de índices.

@@ -4,7 +4,7 @@
 
 Repositório de estudos e exemplos práticos de SQL, organizado a partir dos materiais da pasta do Google Drive e complementado com uma trilha para iniciantes.
 
-O foco principal dos exemplos é SQL Server, com alguns materiais de integração com Power Query/Power BI. A estrutura foi separada por assunto para facilitar consulta, estudo e reaproveitamento em projetos.
+O foco principal dos exemplos é SQL Server, com alguns materiais de integração com Power Query/Power BI e exemplos identificados de Oracle. A estrutura foi separada por assunto para facilitar consulta, estudo e reaproveitamento em projetos.
 
 ## Estrutura
 
@@ -21,8 +21,8 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 | `06-indices/` | `ROW_NUMBER()` e geração de chaves sequenciais em consultas. |
 | `07-joins/` | Aderência de chaves antes do join, `LEFT`, `RIGHT`, `INNER`, `FULL OUTER` e cruzamentos. |
 | `08-crossover/` | Observações sobre materiais auxiliares de crossover/cruzamento. |
-| `09-group-by/` | Agrupamentos, agregações e filtros com `HAVING`. |
-| `10-subconsultas-cte/` | Subconsultas e CTEs para organizar consultas em etapas. |
+| `09-group-by/` | Agrupamentos, agregações, filtros com `HAVING` e passagem do agregado ao detalhe. |
+| `10-subconsultas-cte/` | Subconsultas, CTEs e padrão para filtrar grupos e recuperar registros detalhados. |
 | `11-funcoes-janela/` | `ROW_NUMBER`, rankings, acumulados e percentuais com `OVER`. |
 | `12-transacoes-seguras/` | Padrões seguros de `UPDATE`, `DELETE`, `COMMIT`, `ROLLBACK` e validação de totais. |
 | `13-validacoes-e-boas-praticas/` | Conferências antes/depois, cópia vazia de tabela, `DROP IF EXISTS` e checklist operacional. |
@@ -32,13 +32,15 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 
 ## Observações importantes
 
-- Os scripts usam nomes de tabelas do banco `AdventureWorksDW2016`, como `DimProduct`, `FactInternetSales` e `FactResellerSales`.
+- Os scripts usam principalmente nomes de tabelas do banco `AdventureWorksDW2016`, como `DimProduct`, `FactInternetSales` e `FactResellerSales`.
+- Exemplos específicos de Oracle são identificados no nome do arquivo e nos comentários.
 - `NOLOCK` aparece em vários exemplos originais. Ele pode reduzir bloqueios em consultas exploratórias, mas pode trazer leituras sujas, duplicadas ou inconsistentes. Use com cuidado em relatórios oficiais.
-- Evite `SELECT *` em bases grandes; prefira selecionar apenas as colunas necessárias.
+- Evite `SELECT *` em bases grandes; prefira selecionar apenas as colunas necessárias. Nos exemplos didáticos que recuperam a base completa, `T1.*` é intencional e deve ser substituído em produção.
 - Antes de aplicar joins, rode a análise de aderência em `07-joins/analise-aderencia-chaves.sql` para evitar perda, duplicidade ou multiplicação indevida de linhas e valores.
 - Antes e depois de joins, cargas, `UPDATE` e `DELETE`, compare quantidade de linhas e somas dos valores relevantes.
 - Para copiar estrutura vazia no SQL Server, use `SELECT ... INTO ... WHERE 1 = 0`, lembrando que isso não copia índices, constraints e permissões.
 - Filtros com chaves e datas costumam melhorar desempenho quando existem índices compatíveis, mas filtros artificiais vazios, como `>= ''`, devem ser avaliados no plano de execução antes de virarem padrão.
+- Uma CTE melhora organização, mas não garante materialização nem uma única leitura da tabela. Compare o plano de execução e evite funções sobre colunas filtradas quando elas impedirem índices úteis.
 
 ## Como estudar
 
@@ -48,10 +50,11 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 4. Entenda chaves em `05-modelagem-e-chaves/` antes de entrar em joins.
 5. Rode `07-joins/analise-aderencia-chaves.sql` antes de aplicar joins em bases reais.
 6. Use `07-joins/`, `09-group-by/`, `10-subconsultas-cte/` e `11-funcoes-janela/` para consultas analíticas.
-7. Consulte `02-sql-power-query/` quando precisar chamar SQL Server pelo Power Query.
-8. Veja `04-arquivos-csv-no-sql/` para cargas simples de CSV.
-9. Use `12-transacoes-seguras/` antes de fazer alterações em dados.
-10. Use `13-validacoes-e-boas-praticas/` como checklist antes de joins, cargas e scripts de manutenção.
+7. No módulo de CTE, estude `cte-filtrar-grupos-e-recuperar-detalhes-oracle.sql` para passar de uma regra agregada ao detalhe.
+8. Consulte `02-sql-power-query/` quando precisar chamar SQL Server pelo Power Query.
+9. Veja `04-arquivos-csv-no-sql/` para cargas simples de CSV.
+10. Use `12-transacoes-seguras/` antes de fazer alterações em dados.
+11. Use `13-validacoes-e-boas-praticas/` como checklist antes de joins, cargas e scripts de manutenção.
 
 ## Origem
 
