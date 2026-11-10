@@ -1,18 +1,50 @@
-# Linhagem de tabelas: exemplo Oracle
+# Linhagem de tabelas: exemplos Oracle e SQLite
 
-A linhagem ajuda a responder de onde vêm os dados de uma tabela ou relatório. O [exemplo Oracle](exemplo_oracle.sql) é fictício: filtra os lançamentos de agosto de 2026, calcula débitos menos créditos por empresa e conta e cruza o saldo com o cadastro de contas.
+**Versão da documentação: 1.2.0**
 
-| Origem | Papel no resultado |
+A linhagem ajuda a responder de onde vêm os dados de uma tabela ou relatório. Os exemplos são fictícios e podem ser analisados sem acessar um banco.
+
+## Exemplo Oracle
+
+O [exemplo Oracle](exemplo_oracle.sql) filtra lançamentos de agosto de 2026, calcula débitos menos créditos por empresa e conta e cruza o saldo com o cadastro de contas.
+
+| Papel | Tabela |
 | --- | --- |
-| `financeiro.lancamentos` | Fornece empresa, conta, data, débito e crédito. |
-| `cadastro.contas_contabeis` | Fornece código e descrição da conta. |
+| Origem | `financeiro.lancamentos` |
+| Origem | `cadastro.contas_contabeis` |
+| Destino | `relatorios.saldo_contabil_202608` |
 
-O destino é `relatorios.saldo_contabil_202608`. As CTEs `lancamentos_mes` e `saldo_por_conta` são etapas do mesmo comando `CREATE TABLE ... AS`; por isso, a saída esperada tem um comando e duas tabelas de origem. Se fosse executar uma versão desse SQL em um banco, seria preciso conferir se `conta_id` é único no cadastro e se o `JOIN` mantém as linhas e os saldos esperados. Essa conferência fica fora da análise de linhagem.
+Analise com:
 
-## Como analisar
+```powershell
+python scripts/linhagem_sql/analisar_linhagem.py --dialeto oracle
+```
 
-1. Abra o [guia do analisador no repositório Python](https://github.com/dennisdmn/Python/tree/main/scripts/linhagem_sql) e instale `sqllineage` conforme o guia.
-2. Na raiz do repositório Python, rode `python scripts/linhagem_sql/analisar_linhagem.py --dialeto oracle`.
-3. Na janela, selecione `exemplo_oracle.sql`. O terminal deve mostrar as duas origens e o destino acima.
+## Exemplo SQLite
 
-O analisador lê o arquivo como texto. Não é necessário acessar o Oracle nem criar as tabelas do exemplo.
+O [exemplo SQLite complexo](exemplo_sqlite_complexo.sql) calcula a carteira de recebíveis por cliente em 31/08/2026. Ele contém quatro CTEs, duas junções, agregações, tratamento de nulos, cálculo de atraso com `julianday`, `DENSE_RANK()` e classificação de risco.
+
+| Papel | Tabela |
+| --- | --- |
+| Origem | `financeiro_lancamentos` |
+| Origem | `cadastro_contas` |
+| Origem | `cadastro_clientes` |
+| Destino | `relatorios_carteira_clientes` |
+
+Analise com:
+
+```powershell
+python scripts/linhagem_sql/analisar_linhagem.py --dialeto sqlite
+```
+
+O exemplo SQLite foi executado em um banco temporário com dados fictícios. A validação retornou dois clientes ativos, com totais em aberto de 1.300 e 600 e rankings de exposição 1 e 2.
+
+## Como interpretar
+
+As CTEs são etapas internas do comando e não aparecem como tabelas físicas de origem. `Dialeto provável` é uma estimativa baseada no texto. `Modo de análise` registra o dialeto informado ao SQLLineage.
+
+Quando o SQL não qualifica uma tabela com schema, o SQLLineage pode mostrar `<default>.tabela`. Esse marcador significa schema não informado. Ele é preservado para evitar atribuir um schema sem evidência.
+
+Antes de executar versões reais desses exemplos, valide unicidade das chaves de cadastro, cardinalidade das junções, quantidade de linhas e totais antes e depois.
+
+O analisador está documentado no [repositório Python](https://github.com/dennisdmn/Python/tree/main/scripts/linhagem_sql).

@@ -126,6 +126,8 @@ Referência obrigatória:
 - Consulte [`14-linhagem-de-dados/README.md`](14-linhagem-de-dados/README.md) para ver o exemplo e usar o analisador mantido no repositório Python.
 - Identifique o dialeto e separe tabelas de origem, tabelas de destino e CTEs. Analise o texto sem executar `CREATE TABLE`, alterações de dados ou conexões ao banco.
 - Indique dependências que não puderem ser resolvidas, como SQL dinâmico ou views cuja definição não foi fornecida. Use nomes fictícios nos exemplos públicos.
+- Preserve `<default>` quando o texto não informa schema; não invente `main`, `dbo` ou outro schema. Diferencie o dialeto provável do arquivo do dialeto usado pelo analisador.
+- Para exemplos de dialeto, valide a sintaxe em um mecanismo compatível quando possível e documente origens, destino e resultado esperado.
 
 ## O que uma AI não deve fazer
 
