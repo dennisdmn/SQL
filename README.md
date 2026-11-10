@@ -26,6 +26,7 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 | `11-funcoes-janela/` | `ROW_NUMBER`, rankings, acumulados e percentuais com `OVER`. |
 | `12-transacoes-seguras/` | Padrões seguros de `UPDATE`, `DELETE`, `COMMIT`, `ROLLBACK` e validação de totais. |
 | `13-validacoes-e-boas-praticas/` | Conferências antes/depois, cópia vazia de tabela, `DROP IF EXISTS` e checklist operacional. |
+| [`14-linhagem-de-dados/`](14-linhagem-de-dados/README.md) | Rastrear tabelas de origem e destino sem executar o SQL, com um exemplo Oracle e duas CTEs. |
 | `.github/copilot-instructions.md` | Instruções para Copilot e assistentes integrados ao GitHub. |
 | `docs/` | Inventário e orientação de uso dos materiais migrados. |
 | `assets/` | Manifesto de arquivos binários/grandes mantidos como referência no Drive. |
@@ -52,6 +53,7 @@ O foco principal dos exemplos é SQL Server, com alguns materiais de integraçã
 8. Veja `04-arquivos-csv-no-sql/` para cargas simples de CSV.
 9. Use `12-transacoes-seguras/` antes de fazer alterações em dados.
 10. Use `13-validacoes-e-boas-praticas/` como checklist antes de joins, cargas e scripts de manutenção.
+11. Use `14-linhagem-de-dados/` para descobrir quais tabelas alimentam uma consulta ou tabela de saída.
 
 ## Origem
 

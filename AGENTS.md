@@ -121,6 +121,12 @@ Referência obrigatória:
 - `00-sql-do-zero/sql-do-zero.sql`
 - `05-modelagem-e-chaves/README.md`
 
+### 6. Linhagem de tabelas se verifica no texto SQL
+
+- Consulte [`14-linhagem-de-dados/README.md`](14-linhagem-de-dados/README.md) para ver o exemplo e usar o analisador mantido no repositório Python.
+- Identifique o dialeto e separe tabelas de origem, tabelas de destino e CTEs. Analise o texto sem executar `CREATE TABLE`, alterações de dados ou conexões ao banco.
+- Indique dependências que não puderem ser resolvidas, como SQL dinâmico ou views cuja definição não foi fornecida. Use nomes fictícios nos exemplos públicos.
+
 ## O que uma AI não deve fazer
 
 - Não sugerir `SELECT *` como padrão para produção.
